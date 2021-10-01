@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Bootstrap CSS -->
+        <!-- Note: The 'superhero' bootswatch theme has been used-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+        integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+        crossorigin=""/>
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+        <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+        <link href="../static/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../static/style.css" rel="stylesheet" type="text/css">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        
+
+
+        <!-- Setting title-->
+        <title>Victorian Crime Dashboard</title>
+
+    </head>
+
+    <body>
+      <!-- Start of Navbar-->
+      <div class="container heading"> <!-- start of container -->
+        <div class="row">
+          <div class="container jumbotron text-center title" >
+          <div class="col-md-12 text-center">
+          <h1> <span class="glow" >Victorian Crime</span><span class="glow2"> Data Dashboard </span></h1>
+          </div>
+        </div>
+        </div>
+    </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-1">
+            <div class="container">
+              <a class="navbar-brand" href=""><img src="../static/images/police.svg" width="32" height="30" class="d-inline-block align-text-top"> &nbsp VIC Crime </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../news_tab_scrape">News</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="data.html">Data</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav> <!-- End of Navbar -->
+
+          <!-- Start of dashboard section. This is the right hand side of the grid.-->
+          <br>
+          <div class="container">
+            <div class="row">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
+                            <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center py-2 text-white px-1 news"><span class="d-flex align-items-center"><img src="../static/images/news3.PNG" width="150" height="25" class="d-inline-block align-text-top"></span></div>
+                            <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"> {% for headline in news.Headline %} <a>{{ headline }} </a> <span class="dot"></span>{% endfor %} </marquee>
+                            <p class="scrape-button"><a class="btn btn-sm" href="../scrape" role="button"><b>Get Latest Headlines</b></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div> 
+            <br>
+              <hr>
+            <div class="row">
+              <div class="col-sm-1"></div>
+                  <div class="col-sm-2" id="user-selection">
+                    <div class="card card1">
+                      <div class="card-body">
+                        <h5><b>Select suburb to explore the dataset:</b></h5>
+                        <hr>
+                        <select id="selDataset" onchange="optionChanged(this.value)">
+                        <option >Melbourne</option></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                  <div class="card card3">
+                    <div class="card-body">
+                      <h3 class="card-title"><b>2021</b></h3>
+                      <h5 class="card-title"><b>Total Number of Offences:</b></h5>
+                      <h5 class="card-text" id="card2021"></h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="card card3">
+                    <div class="card-body">
+                      <h3 class="card-title"><b>2020</b></h3>
+                      <h5 class="card-title"><b>Total Number of Offences:</b></h5>
+                      <h5 class="card-text" id="card2020"></h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="card card2">
+                    <div class="card-body">
+                      <h3 class="card-title"><b>2021 vs 2020</b></h3>
+                      <h5 class="card-title"><b>Total difference:</b></h5>
+                      <h5 class="card-text" id="difference"><p></p></h5>
+                      <h5 class="card-text" id="difference2"><p></p></h5>
+                    </div>
+                  </div>
+                </div>
+                <p></p>
+                <!-- <hr> -->
+            </div>
+            <p></p>
+            <div class="row">
+              <div class="col-lg-7" id="chartReport">
+               <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-sm-1">
+                   </div>
+              <div class="col-lg-5" id="chartReport2">
+               <canvas id="myChart2"></canvas>
+                </div>
+                <p></p>
+            <hr>
+          </div>
+            <div class="row">
+              <h4><b>Map of Victoria: <span class="headingtext"> Offences by suburb </span></b></h4>
+              <p></p>
+              <div class="col-lg-1" ></div>
+              <div class="col-lg-10" id="map">
+                
+                </div>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+
+            <div class="row">
+              <div class="col-lg-12">
+              </div>
+            </div>
+           </div>
+
+        <!-- This script is required to get the drop down options to work.--> 
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+        integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+        crossorigin=""></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="./static/js/app.js"></script>
+        <script type="text/javascript" src="./static/js/leaflet.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    </body>
+</html>
+
+    

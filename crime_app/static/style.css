@@ -1,0 +1,209 @@
+body {
+    margin: 0;
+}
+
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    height: 25px;
+    width: 100% !important; 
+    text-align: center;
+}
+
+
+#footer p {
+    margin: 0;
+    font-size: 14px;
+    color: white !important;
+  }
+
+#chartReport {
+  width: 600px;
+  height: 400px;
+
+}
+
+#chartReport2 {
+  width: 500px;
+  height: 400px;
+}
+
+
+.legend {
+  padding: 6px 8px;
+  font-weight: bold;
+  color: black;
+  background: #fff !important;
+  border-radius: 5px;
+  text-align: left;
+
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+.headingtext {
+  color: #ff0000
+}
+
+div.info.legend.leaflet-control br { clear: both; } 
+
+
+#user-selection {
+  color:black;
+}
+
+#selDataset {
+  height: 25px;
+}
+
+#map
+{ height: 350px; 
+  width: 1100px;
+  position: relative;
+}
+
+
+h3 {
+  color:#ff0000;
+  text-align: center;
+
+}
+
+
+h5 {
+  color: #13137a;
+  text-align: center;
+}
+
+h4 {
+  text-align: center;
+  color: navy
+}
+
+.card {
+  border-color: navy;
+  height: 10rem;
+  /* background-color: #cce0ff; */
+  border-width: medium;
+  
+}
+
+p {
+  text-align: center;
+}
+
+.card1 {
+  border-color: #cc0000;
+  border-width: medium;
+  height: 10rem;
+  width: 15rem;
+  background-color: white
+}
+
+.card2 {
+  height: 10rem;
+  width: 15rem;
+}
+
+.card3 {
+  height: 10rem;
+  width: 12rem;
+}
+
+/* Reference for glow feature https://www.w3schools.com/howto/howto_css_glowing_text.asp */
+.glow {
+    font-size: 60px;
+    color: whitesmoke;
+    text-align: center;
+    -webkit-animation: glow 0.5s ease-in-out infinite alternate;
+    -moz-animation: glow 0.5s ease-in-out infinite alternate;
+    animation: glow 0.5s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #13137a, 0 0 20px #1a1aff, 0 0 30px #1a1aff, 0 0 40px #1a1aff, 0 0 50px #80bfff, 0 0 60px #80bfff, 0 0 70px #80bfff;
+    }
+    to {
+      text-shadow: 0 0 20px #ff0000, 0 0 30px #ec4646, 0 0 40px #f10202, 0 0 50px #f10202, 0 0 60px rgb(151, 0, 0), 0 0 70px #1a1aff, 0 0 80px #1a1aff;
+    }
+  }
+
+  /* Reference for glow feature https://www.w3schools.com/howto/howto_css_glowing_text.asp */
+.glow2 {
+    font-size: 60px;
+    color: whitesmoke;
+    text-align: center;
+    -webkit-animation: glow2 0.5s ease-in-out infinite alternate;
+    -moz-animation: glow2 0.5s ease-in-out infinite alternate;
+    animation: glow2 0.5s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes glow2 {
+    from {
+        text-shadow: 0 0 20px #ff0000, 0 0 30px #ec4646, 0 0 40px #f10202, 0 0 50px #f10202, 0 0 60px rgb(151, 0, 0), 0 0 70px #1a1aff, 0 0 80px #1a1aff;
+    }
+    to {
+      text-shadow: 0 0 10px #13137a, 0 0 20px #1a1aff, 0 0 30px #1a1aff, 0 0 40px #1a1aff, 0 0 50px #80bfff, 0 0 60px #80bfff, 0 0 70px #80bfff;
+    }
+  }
+
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.mt-5 {
+  margin:0 !important;
+}
+
+
+.news {
+    width: 160px;
+    border-color:red !important;
+}
+
+.news-scroll a {
+    text-decoration: none;
+    color:navy !important;
+    font-size: 25px !important;
+}
+
+.breaking-news {
+  background-color:#b3d1ff;
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px !important;
+    background-color: red;
+    border-radius: 50%;
+    border-color:red;
+    display: inline-block
+}
+
+.btn {
+  background-color: white !important;
+  border-color: red !important;
+  color: navy !important;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 150px;
+  height: 30px;
+  font-size: 14px;
+  border-width: 2px;
+}
+
+p.scrape-button {
+  margin: 0;
+}
+
