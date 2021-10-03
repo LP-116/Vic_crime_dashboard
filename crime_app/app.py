@@ -25,6 +25,10 @@ suburb_data = open("suburbs.json")
 
 suburb_list = json.load(suburb_data)
 
+incident_data = open("incidents.json")
+
+incident_list = json.load(incident_data)
+
 # Homepage Route. Grabs one entry from Mongo database for the news headlines.
 @app.route("/")
 def welcome():
@@ -64,6 +68,12 @@ def news_tab_scrape():
 def suburbs():
 
     return jsonify(suburb_list)
+
+
+@app.route("/incidents")
+def incidents():
+
+    return jsonify(incident_list)
 
 
 if __name__ == "__main__":

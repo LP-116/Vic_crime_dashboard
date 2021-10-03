@@ -11,7 +11,7 @@ function init() {
         for (var i in item) {
                 suburb_list.push(item[i].suburb)
                 }
-            
+
         var dropdownMenu = d3.select("#selDataset");
 
         var dropdownNames = suburb_list;
@@ -23,7 +23,7 @@ function init() {
             .property("value", item);
         });
         
-        // buildGraph();
+        buildGraph();
         // updatestats();
 
     });
@@ -31,84 +31,88 @@ function init() {
 };
 
 
-// // This function builds the bar and line graphs.
-// function buildGraph() {
+// This function builds the bar and line graphs.
+function buildGraph() {
     
-//     // Reading the incidents route data.
-//     d3.json("/api/v1.0/incidents").then((data) => {
+    // Reading the incidents route data.
+    d3.json("/incidents").then((data) => {
 
-//         // Clearing the existing chart space to avoid overlap issues.
-//         document.querySelector("#chartReport").innerHTML = '<canvas id="myChart"></canvas>';
+        // Clearing the existing chart space to avoid overlap issues.
+        document.querySelector("#chartReport").innerHTML = '<canvas id="myChart"></canvas>';
 
-//         // Getting the suburb value in the dropdown box.
-//         var idSelect = d3.select("#selDataset").property("value")
+        // Getting the suburb value in the dropdown box.
+        var idSelect = d3.select("#selDataset").property("value")
 
-//         console.log(idSelect);
+        console.log(idSelect);
+
+        console.log(data[0])
        
-//         // Creating blank lists to hold results.
-//         suburb_list = []
-//         incident_list = []
-//         offence_sub_div_list = []
+        // Creating blank lists to hold results.
+        suburb_list = []
+        incident_list = []
+        offence_sub_div_list = []
 
 
-//         // Everytime the suburb in the dropdown box is matched to the json data, push the required part into the matching list.
-//         for (var i in data) {
+        // Everytime the suburb in the dropdown box is matched to the json data, push the required part into the matching list.
+        for (var i in data) {
 
-//             if(data[i].suburb === idSelect){
-//                 suburb_list.push(data[i].suburb)
-//                 incident_list.push(data[i].incidents)
-//                 offence_sub_div_list.push(data[i].sub)
-//             }
-//         }
+            if(data[i].suburb === idSelect){
+                suburb_list.push(data[i].suburb)
+                incident_list.push(data[i].incidents)
+                offence_sub_div_list.push(data[i].offence_sub_div)
+            }
+        }
 
-//         // Filter the list's to return top 5 results.
-//         var top5_incidents = incident_list.slice(0,5);
-//         var top5_sub_div = offence_sub_div_list.slice(0,5);
+        // Filter the list's to return top 5 results.
+        var top5_incidents = incident_list.slice(0,5);
+        var top5_sub_div = offence_sub_div_list.slice(0,5);
 
-//         console.log(top5_incidents);
-//         console.log(top5_sub_div);
+        console.log(top5_incidents);
+        console.log(top5_sub_div);
 
-//         // Create the graph using Chart.js
-//         const barColors = ["#87CEEB", "#1E90FF", "#00008B", "#1f50cc", "#1E90FF"]
-//         var myChart = new Chart("myChart", {
-//         type: "horizontalBar",
+        // Create the graph using Chart.js
+        const barColors = ["#87CEEB", "#1E90FF", "#00008B", "#1f50cc", "#1E90FF"]
+        var myChart = new Chart("myChart", {
+        type: "horizontalBar",
 
-//         data: {
-//           labels: top5_sub_div,
-//           datasets: [{
-//             backgroundColor: barColors,
-//             data: top5_incidents,
-//             grouped: true, 
-//             maxBarThickness: 50, 
-//             label: "Total Number of Offences",            
-//           }]
-//         },
+        data: {
+          labels: top5_sub_div,
+          datasets: [{
+            backgroundColor: barColors,
+            data: top5_incidents,
+            grouped: true, 
+            maxBarThickness: 50, 
+            label: "Total Number of Offences",            
+          }]
+        },
 
 
-//         options: {
+        options: {
 
-//             indexAxis: 'y',
-//             responsive: true,
-//             maintainAspectRatio: false,
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
 
-//             title: {
-//                     display: true,
-//                     text: "2021: Top 5 Offences Comitted",
-//                     fontSize: 16
-//                 },
+            title: {
+                    display: true,
+                    text: "2021: Top 5 Offences Comitted",
+                    fontSize: 16
+                },
             
-//             scales: {
-//                     yAxes: [{
-//                     ticks: {
-//                     beginAtZero: true,
-//                     grouped: true
-//                 }
-//                 }]
+            scales: {
+                    yAxes: [{
+                    ticks: {
+                    beginAtZero: true,
+                    grouped: true
+                }
+                }]
 
-//             },
+            },
 
             
-//     }})})
+    }})})
+
+}
 
 //     // Reading in the line_data route.
 //     d3.json("/api/v1.0/line_data").then((data) => {
