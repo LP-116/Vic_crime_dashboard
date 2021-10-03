@@ -45,6 +45,9 @@ stats_data = open("stats_data.json")
 
 stats_list = json.load(stats_data)
 
+data_tab = open("data_data.json")
+
+data_list = json.load(data_tab)
 
 # Homepage Route. Grabs one entry from Mongo database for the news headlines.
 @app.route("/")
@@ -53,6 +56,13 @@ def welcome():
     news_data = mongo.db.data.find_one()
 
     return render_template("index.html", news=news_data)
+
+
+
+@app.route("/data.html")
+def data_tab():
+
+    return render_template("data.html")
 
 
 # Route that returns the news_scrape data
@@ -121,6 +131,15 @@ def map_2021():
 def stats_data():
 
     return jsonify(stats_list)
+
+
+@app.route("/data_tab")
+def data():
+
+    return jsonify(data_list)
+
+
+
 
 
 if __name__ == "__main__":
