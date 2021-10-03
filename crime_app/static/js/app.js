@@ -24,7 +24,7 @@ function init() {
         });
         
         buildGraph();
-        // updatestats();
+        updatestats();
 
     });
    
@@ -112,9 +112,8 @@ function buildGraph() {
 
 
     // Reading in the line_data route.
-    d3.json("line_data").then((data) => {
+    d3.json("/line_data").then((data) => {
 
-        console.log(data)
 
         // Clearing the line chart area.
         document.querySelector("#chartReport2").innerHTML = '<canvas id="myChart2"></canvas>';
@@ -188,62 +187,62 @@ function buildGraph() {
 
 }
 
-// // This function is used to update the stats_data.
-// function updatestats() {
+// This function is used to update the stats_data.
+function updatestats() {
 
-//     // Reading in the stats_data route.
-//     d3.json("/api/v1.0/stats_data").then((data) => {
+    // Reading in the stats_data route.
+    d3.json("/stats_data").then((data) => {
 
-//         // Getting the suburb from the drop down box.
-//         var idSelect = d3.select("#selDataset").property("value")
+        // Getting the suburb from the drop down box.
+        var idSelect = d3.select("#selDataset").property("value")
 
-//         console.log(idSelect);
+        console.log(idSelect);
 
-//         // Creating blank lists.
-//         incident_list = []
-//         incident_list2 = []
+        // Creating blank lists.
+        incident_list = []
+        incident_list2 = []
 
-//         // Everytime the suburb and year match 2021, push the data into the corresponding list.
-//         for (var i in data) {
+        // Everytime the suburb and year match 2021, push the data into the corresponding list.
+        for (var i in data) {
 
-//             if(data[i].suburb === idSelect && data[i].year === parseInt("2021")){
-//                 incident_list.push(data[i].incidents)
-//             }
-//         }
+            if(data[i].suburb === idSelect && data[i].year === parseInt("2021")){
+                incident_list.push(data[i].incidents)
+            }
+        }
 
-//         // Everytime the suburb and year match 2020, push the data into the corresponding list.
-//         for (var x in data) {
+        // Everytime the suburb and year match 2020, push the data into the corresponding list.
+        for (var x in data) {
 
-//             if(data[x].suburb === idSelect && data[x].year === parseInt("2020")){
-//                 incident_list2.push(data[x].incidents)
-//             }
-//         }
+            if(data[x].suburb === idSelect && data[x].year === parseInt("2020")){
+                incident_list2.push(data[x].incidents)
+            }
+        }
 
-//         // Calculate the difference and percentage change.
-//         var difference = (incident_list[0] - incident_list2[0])
-//         var difference2 = ((incident_list2[0] - incident_list[0]) / incident_list[0] * 100).toFixed(2);
+        // Calculate the difference and percentage change.
+        var difference = (incident_list[0] - incident_list2[0])
+        var difference2 = ((incident_list2[0] - incident_list[0]) / incident_list[0] * 100).toFixed(2);
 
-//         // Input the results into the card as text.
-//         d3.select("#card2021").text(incident_list[0]);
-//         d3.select("#card2020").text(incident_list2[0]);
-//         d3.select("#difference").text(difference);
+        // Input the results into the card as text.
+        d3.select("#card2021").text(incident_list[0]);
+        d3.select("#card2020").text(incident_list2[0]);
+        d3.select("#difference").text(difference);
 
-//         // Used for formatting the % difference.
-//         if (difference < 0) {
+        // Used for formatting the % difference.
+        if (difference < 0) {
 
-//             d3.select("#difference2").text((difference2) + "% decrease");
-//             }
+            d3.select("#difference2").text((difference2) + "% decrease");
+            }
 
-//             else {
-//                 var newDifference = Math.abs(difference2)
-//                 d3.select("#difference2").text((newDifference) + "% increase");
-//             }
-
-
-//     })
+            else {
+                var newDifference = Math.abs(difference2)
+                d3.select("#difference2").text((newDifference) + "% increase");
+            }
 
 
-// }
+    })
+
+
+}
 
 
 // Each time the drop down selection is changed, run the functions.
