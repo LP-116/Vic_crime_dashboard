@@ -33,6 +33,11 @@ line_data = open("line_data.json")
 
 line_list = json.load(line_data)
 
+map_data = open("map_data.json")
+
+map_list = json.load(map_data)
+
+
 # Homepage Route. Grabs one entry from Mongo database for the news headlines.
 @app.route("/")
 def welcome():
@@ -85,6 +90,11 @@ def line_data():
 
     return jsonify(line_list)
    
+
+@app.route("/map_data")
+def line_data():
+
+    return jsonify(map_list)
 
 
 if __name__ == "__main__":
