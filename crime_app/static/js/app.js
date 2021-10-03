@@ -45,8 +45,6 @@ function buildGraph() {
 
         console.log(idSelect);
 
-        console.log(data[0])
-       
         // Creating blank lists to hold results.
         suburb_list = []
         incident_list = []
@@ -112,82 +110,83 @@ function buildGraph() {
             
     }})})
 
-}
 
-//     // Reading in the line_data route.
-//     d3.json("/api/v1.0/line_data").then((data) => {
+    // Reading in the line_data route.
+    d3.json("line_data").then((data) => {
 
-//         // Clearing the line chart area.
-//         document.querySelector("#chartReport2").innerHTML = '<canvas id="myChart2"></canvas>';
+        console.log(data)
 
-//         // Getting the suburb value from the dropdown box.
-//         var idSelect = d3.select("#selDataset").property("value")
+        // Clearing the line chart area.
+        document.querySelector("#chartReport2").innerHTML = '<canvas id="myChart2"></canvas>';
 
-//         console.log(idSelect);
+        // Getting the suburb value from the dropdown box.
+        var idSelect = d3.select("#selDataset").property("value")
 
-//         // Creating blank lists.
-//         incident_list = []
-//         year_list = []
+        console.log(idSelect);
 
-//         // Everytime there is a suburb match, push the data into the corresponding list.
-//         for (var i in data) {
+        // Creating blank lists.
+        incident_list = []
+        year_list = []
 
-//             if(data[i].suburb === idSelect){
-//                 year_list.push(data[i].year)
-//                 incident_list.push(data[i].incidents)
-//             }
-//         }
+        // Everytime there is a suburb match, push the data into the corresponding list.
+        for (var i in data) {
 
-
-//         console.log(incident_list);
-//         console.log(year_list)
-
-//         // Creating the line chart using chart.js
-//         const barColors = ["#87CEEB"]
-//         new Chart("myChart2", {
-//         type: "line",
-
-//         data: {
-//           labels: year_list.reverse(),
-//           datasets: [{
-//             data: incident_list.reverse(),
-//             grouped: true, 
-//             maxBarThickness: 50, 
-//             label: "Total Number of Offences",   
-//             fill: false,
-//             borderDash: [5, 5],    
-//             borderColor: "#1f50cc",
-//             pointBordercolor: "navy",
-//             pointBackgroundColor: 'red',
-//             pointStyle: 'rectRot'
-//           }]
-//         },
+            if(data[i].suburb === idSelect){
+                year_list.push(data[i].year)
+                incident_list.push(data[i].incidents)
+            }
+        }
 
 
-//         options: {
+        console.log(incident_list);
+        console.log(year_list)
 
-//             responsive: true,
-//             maintainAspectRatio: false,
+        // Creating the line chart using chart.js
+        const barColors = ["#87CEEB"]
+        new Chart("myChart2", {
+        type: "line",
 
-//             title: {
-//             display: true,
-//             text: "Total No. of Offences Comitted from 2012 - 2021",
-//             fontSize: 16},
+        data: {
+          labels: year_list.reverse(),
+          datasets: [{
+            data: incident_list.reverse(),
+            grouped: true, 
+            maxBarThickness: 50, 
+            label: "Total Number of Offences",   
+            fill: false,
+            borderDash: [5, 5],    
+            borderColor: "#1f50cc",
+            pointBordercolor: "navy",
+            pointBackgroundColor: 'red',
+            pointStyle: 'rectRot'
+          }]
+        },
+
+
+        options: {
+
+            responsive: true,
+            maintainAspectRatio: false,
+
+            title: {
+            display: true,
+            text: "Total No. of Offences Comitted from 2012 - 2021",
+            fontSize: 16},
             
-//             scales: {
-//                 yAxes: [{
-//                 ticks: {
-//                 beginAtZero: true,
-//                 grouped: true}
-//                 }]
-//             },
-//     }})
+            scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true,
+                grouped: true}
+                }]
+            },
+    }})
 
 
 
-// });
+});
 
-// }
+}
 
 // // This function is used to update the stats_data.
 // function updatestats() {
@@ -247,12 +246,12 @@ function buildGraph() {
 // }
 
 
-// // Each time the drop down selection is changed, run the functions.
-// function optionChanged()
-// { 
-// buildGraph();
-// updatestats()
-//  }
+// Each time the drop down selection is changed, run the functions.
+function optionChanged()
+{ 
+buildGraph();
+updatestats()
+ }
 
 
 // Run the init function on webpage load.
