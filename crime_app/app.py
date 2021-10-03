@@ -33,9 +33,13 @@ line_data = open("line_data.json")
 
 line_list = json.load(line_data)
 
-map_data = open("map_data.json")
+map_2020_data = open("map_2020.json")
 
-map_list = json.load(map_data)
+map_2020_list = json.load(map_2020_data)
+
+map_2021_data = open("map_2021.json")
+
+map_2021_list = json.load(map_2021_data)
 
 stats_data = open("stats_data.json")
 
@@ -99,6 +103,18 @@ def line_data():
 def map_data():
 
     return jsonify(map_list)
+
+
+@app.route("/map_2020")
+def map_2020():
+
+    return jsonify(map_2020_list)
+
+
+@app.route("/map_2021")
+def map_2021():
+
+    return jsonify(map_2021_list)
 
 
 @app.route("/stats_data")
