@@ -17,6 +17,9 @@ from flask_pymongo import PyMongo
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
 from webdriver_manager.chrome import ChromeDriverManager
+import selenium
+from selenium import webdriver
+
 import pymongo
 import pandas as pd
 import json
@@ -24,16 +27,8 @@ import json
 
 def scrape_all():
 
-    GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
-    CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
-
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.binary_location = GOOGLE_CHROME_PATH
-
-    # Establishing connection to the browser.
-    browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
 
     # News webpage to scrape the data.
     url='https://www.news.com.au/national/victoria/crime'
@@ -162,8 +157,9 @@ def scrape():
 @app.route("/news.html")
 def news_tab_scrape():
 
+    news_data = mongo.db.data.find_one()
 
-    return render_template("news.html")
+    return render_template("news.html", news=news_data)
 
 
 @app.route("/suburbs")
