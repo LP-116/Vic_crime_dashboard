@@ -12,83 +12,86 @@ from sqlalchemy import create_engine, func, inspect
 from flask import Flask, jsonify, render_template, redirect
 from flask_pymongo import PyMongo
 
-# # Import and dependencies
-# from bs4 import BeautifulSoup as bs
-# from splinter import Browser
-# from webdriver_manager.chrome import ChromeDriverManager
-# import pymongo
-# import pandas as pd
-# import json
+# Import and dependencies
+from bs4 import BeautifulSoup as bs
+from splinter import Browser
+from webdriver_manager.chrome import ChromeDriverManager
+import pymongo
+import pandas as pd
+import json
 
 
-# def scrape_all():
+def scrape_all():
 
-#     # Establishing connection to the browser.
-#     executable_path = {'executable_path': ChromeDriverManager().install()}
-#     browser = Browser('chrome', **executable_path, headless=False)
+    # Establishing connection to the browser.
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
 
-#     # News webpage to scrape the data.
-#     url='https://www.news.com.au/national/victoria/crime'
-#     browser.visit(url)
+    # News webpage to scrape the data.
+    url='https://www.news.com.au/national/victoria/crime'
+    browser.visit(url)
 
-#     # Create BeautifulSoup object
-#     html = browser.html
-#     soup = bs(html, 'html.parser')
-
-
-#     try:
-#         # Finding the first 5 headlines, urls and descriptions and adding to a list.
-
-#         headline_list = []
-
-#         headlines = soup.find_all('a', class_='storyblock_title_link')
-
-#         for headline in headlines:
-#             if len(headline_list) < 5:
-#                 title= headline.text.strip()
-#                 headline_list.append(title)
+    # Create BeautifulSoup object
+    html = browser.html
+    soup = bs(html, 'html.parser')
 
 
-#         link_list = []
+    try:
+        # Finding the first 5 headlines, urls and descriptions and adding to a list.
 
-#         results = soup.find_all('h4', class_='storyblock_title')
+        headline_list = []
 
-#         for result in results:
-#             if len(link_list) < 5:
-#                 link = result.a['href']
-#                 link_list.append(link)
+        headlines = soup.find_all('a', class_='storyblock_title_link')
 
-
-#         paragraph_list = []
-
-#         for item in soup.find_all('p', class_="storyblock_standfirst g_font-body-s"):
-#             if len(paragraph_list) < 5:
-#                 about= item.text.strip()
-#                 paragraph_list.append(about)
+        for headline in headlines:
+            if len(headline_list) < 5:
+                title= headline.text.strip()
+                headline_list.append(title)
 
 
-#         # Creating a dictionary to hold all the data.
-#         news_dict = {
-#             'Headline':headline_list,
-#             'URL':link_list,
-#             'Description':paragraph_list}
+        link_list = []
+
+        results = soup.find_all('h4', class_='storyblock_title')
+
+        for result in results:
+            if len(link_list) < 5:
+                link = result.a['href']
+                link_list.append(link)
 
 
-#         # Ending the browser session.
-#         browser.quit()
+        paragraph_list = []
 
-#     except AttributeError:
-#         return None
+        for item in soup.find_all('p', class_="storyblock_standfirst g_font-body-s"):
+            if len(paragraph_list) < 5:
+                about= item.text.strip()
+                paragraph_list.append(about)
 
-#     # The news_dict is returned once the scrape is complete.
-#     return news_dict
+
+        # Creating a dictionary to hold all the data.
+        news_dict = {
+            'Headline':headline_list,
+            'URL':link_list,
+            'Description':paragraph_list}
+
+
+        # Ending the browser session.
+        browser.quit()
+
+    except AttributeError:
+        return None
+
+    # The news_dict is returned once the scrape is complete.
+    return news_dict
 
 # Create Flask
 app = Flask(__name__)
 
 
 # Connect to the Mongo database.
-mongo = PyMongo(app, uri="mongodb://localhost:27017/news_app")
+
+app.config['MONGODB_URI'] = "mongodb+srv://crime-viewer:bootcamp@vic-crime.8yo2p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+mongo = PyMongo(app, uri="mongodb+srv://crime-viewer:bootcamp@vic-crime.8yo2p.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
 suburb_data = open("suburbs.json")
 
@@ -122,9 +125,9 @@ data_list = json.load(data_tab)
 @app.route("/")
 def welcome():
 
-    # news_data = mongo.db.data.find_one()
+    news_data = mongo.db.data.find_one()
 
-    return render_template("index.html")
+    return render_template("index.html", news=news_data)
 
 
 
@@ -135,14 +138,14 @@ def data_tab():
 
 
 # Route that returns the news_scrape data
-# @app.route("/scrape")
-# def scrape():
+@app.route("/scrape")
+def scrape():
 
-#     get_data = scrape_all()
+    get_data = scrape_all()
 
-#     mongo.db.data.update({}, get_data, upsert=True)
+    mongo.db.data.update({}, get_data, upsert=True)
 
-#     return redirect("/")
+    return redirect("/")
 
 
 # Route used for when clicking on news tab 
