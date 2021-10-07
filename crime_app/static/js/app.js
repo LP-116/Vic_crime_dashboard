@@ -2,6 +2,16 @@
 
 // This function is run on webpage load. 
 //  It builds the suburb dropdown menu and runs the buildgraph and updatestats functions. 
+
+function startSpinner1() {
+    // Codde to make the spinner start
+    $("#filter-btn1").prop("disabled", true);
+    $("#filter-btn1").html(
+        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp Loading...`
+    );
+}
+
+
 function init() {
 
     d3.json("/suburbs").then((item) => {
