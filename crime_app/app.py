@@ -24,7 +24,7 @@ import json
 def scrape_all():
 
     # Establishing connection to the browser.
-    executable_path = {'executable_path': ChromeDriverManager().install()}
+    executable_path = {"executable_path": os.environ.get('CHROME_PATH')}
     browser = Browser('chrome', **executable_path, headless=False)
 
     # News webpage to scrape the data.
