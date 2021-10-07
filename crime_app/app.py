@@ -24,9 +24,16 @@ import json
 
 def scrape_all():
 
+    GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+    CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.binary_location = GOOGLE_CHROME_PATH
+
     # Establishing connection to the browser.
-    executable_path = {"executable_path": os.environ.get('CHROME_PATH')}
-    browser = Browser('chrome', **executable_path, headless=False)
+    browser = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, chrome_options=chrome_options)
 
     # News webpage to scrape the data.
     url='https://www.news.com.au/national/victoria/crime'
