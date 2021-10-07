@@ -3,6 +3,7 @@ import datetime as dt
 import numpy as np 
 import pandas as pd 
 import json
+import os
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
